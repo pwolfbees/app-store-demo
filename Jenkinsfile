@@ -8,7 +8,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        container('docker') {
         sh 'mvn clean source:jar package'
+        }
       }
     }
     stage('Browser Tests') {
