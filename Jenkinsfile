@@ -9,6 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn clean source:jar package'
+        sleep 10
       }
     }
     stage('Browser Tests') {
@@ -38,6 +39,12 @@ pipeline {
     stage('Deploy') {
       steps {
         sh 'mvn source:jar package -Dmaven.test.skip'
+      }
+    }
+    stage('Train Skynet') {
+      steps {
+        echo 'Just kidding lol'
+        sleep 25
       }
     }
   }
