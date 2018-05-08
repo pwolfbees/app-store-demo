@@ -6,44 +6,54 @@ pipeline {
     
   }
   stages {
-    stage('Build') {
+    stage('Build T1000') {
       steps {
         sh 'mvn clean source:jar package'
         sleep 10
       }
     }
-    stage('Browser Tests') {
+    stage('Validate Systems') {
       parallel {
-        stage('Firefox') {
+        stage('Visual') {
           steps {
             sh 'echo \'setting up selenium environment\''
           }
         }
-        stage('Safari') {
+        stage('Weapons') {
           steps {
             sh 'echo \'setting up selenium environment\''
           }
         }
-        stage('Chrome') {
+        stage('Recovery') {
           steps {
             sh 'echo \'setting up selenium environment\''
           }
         }
       }
     }
-    stage('Static Analysis') {
+    stage('Battle Testing') {
       steps {
         sh 'mvn findbugs:findbugs'
+        sleep 60
       }
     }
     stage('Deploy') {
-      steps {
-        sh 'mvn source:jar package -Dmaven.test.skip'
+      parallel {
+        stage('Deploy') {
+          steps {
+            sh 'mvn source:jar package -Dmaven.test.skip'
+          }
+        }
+        stage('Time Travel') {
+          steps {
+            echo 'sss'
+          }
+        }
       }
     }
     stage('Skynet') {
       parallel {
-        stage('Train Skynet') {
+        stage('Blow stuff up') {
           steps {
             echo 'Just kidding lol'
             sleep 25
@@ -54,6 +64,11 @@ pipeline {
             sleep 43
           }
         }
+      }
+    }
+    stage('I\'ll be back') {
+      steps {
+        sleep 10
       }
     }
   }
