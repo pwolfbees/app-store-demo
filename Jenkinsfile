@@ -41,10 +41,19 @@ pipeline {
         sh 'mvn source:jar package -Dmaven.test.skip'
       }
     }
-    stage('Train Skynet') {
-      steps {
-        echo 'Just kidding lol'
-        sleep 25
+    stage('Skynet') {
+      parallel {
+        stage('Train Skynet') {
+          steps {
+            echo 'Just kidding lol'
+            sleep 25
+          }
+        }
+        stage('Locate John Connor') {
+          steps {
+            sleep 43
+          }
+        }
       }
     }
   }
