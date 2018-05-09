@@ -47,8 +47,17 @@ pipeline {
       }
     }
     stage('Manual QA') {
-      steps {
-        input(message: 'Are you sure this is a good thing?', ok: 'Great')
+      parallel {
+        stage('UAT') {
+          steps {
+            input(message: 'Are you sure this is a good thing?', ok: 'Great')
+          }
+        }
+        stage('Performance') {
+          steps {
+            sh 'printenv'
+          }
+        }
       }
     }
     stage('Deploy to Production') {
