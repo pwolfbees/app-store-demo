@@ -12,29 +12,31 @@ pipeline {
       }
     }
     stage('Browser Tests') {
-      steps {
-        parallel(
-          "Firefox": {
+      parallel {
+        stage('Firefox') {
+          steps {
             sh 'echo \'setting up selenium environment\''
             sh 'ping -c 5 localhost'
-            
-          },
-          "Safari": {
+          }
+        }
+        stage('Safari') {
+          steps {
             sh 'echo \'setting up selenium environment\''
             sh 'ping -c 8 localhost'
-            
-          },
-          "Chrome": {
+          }
+        }
+        stage('Chrome') {
+          steps {
             sh 'echo \'setting up selenium environment\''
             sh 'ping -c 3 localhost'
-            
-          },
-          "Internet Explorer": {
+          }
+        }
+        stage('Internet Explorer') {
+          steps {
             sh 'echo \'setting up selenium environment\''
             sh 'ping -c 4 localhost'
-            
           }
-        )
+        }
       }
     }
     stage('Static Analysis') {
@@ -42,9 +44,19 @@ pipeline {
         sh 'mvn findbugs:findbugs'
       }
     }
-    stage('Deploy') {
+    stage('Deploy to QA') {
       steps {
         sh 'mvn source:jar package -Dmaven.test.skip'
+      }
+    }
+    stage('Manual QA') {
+      steps {
+        input(message: 'Are you sure this is a good thing?', ok: 'Great')
+      }
+    }
+    stage('Deploy to Production') {
+      steps {
+        sleep 10
       }
     }
   }
