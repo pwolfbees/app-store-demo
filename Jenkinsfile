@@ -42,23 +42,22 @@ pipeline {
       }
     }
     stage('Deploy to QA') {
-      steps {
-        sh 'mvn source:jar package -Dmaven.test.skip'
+      parallel {
+        stage('Deploy to alpha stage') {
+          steps {
+            sh 'mvn source:jar package -Dmaven.test.skip'
+          }
+        }
+        stage('Deploy to beta stage') {
+          steps {
+            sleep 3
+          }
+        }
       }
     }
-    stage('Manual QA') {
-      parallel {
-        stage('UAT') {
-          steps {
-            input(message: 'Are you sure this is a good thing?', ok: 'Great')
-          }
-        }
-        stage('Performance') {
-          steps {
-            sh 'printenv'
-            input(message: 'Por que no lo dos?', ok: 'Si')
-          }
-        }
+    stage('Manual Testing') {
+      steps {
+        input(message: 'Are you sure this is a good thing?', ok: 'Great')
       }
     }
     stage('Deploy to Production') {
