@@ -34,7 +34,7 @@ pipeline {
     stage('Battle Testing') {
       steps {
         sh 'mvn findbugs:findbugs'
-        sleep 60
+        sleep 15
       }
     }
     stage('Deploy') {
