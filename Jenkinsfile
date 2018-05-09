@@ -61,7 +61,7 @@ pipeline {
         }
         stage('Locate John Connor') {
           steps {
-            sleep 43
+            sleep 12
           }
         }
       }
