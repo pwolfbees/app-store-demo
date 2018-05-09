@@ -56,6 +56,7 @@ pipeline {
         stage('Performance') {
           steps {
             sh 'printenv'
+            input(message: 'Por que no lo dos?', ok: 'Si')
           }
         }
       }
